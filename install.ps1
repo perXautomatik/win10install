@@ -4,27 +4,36 @@ Move-LibraryDirectory "Personal" "$env:UserProfile\skydrive\documents"
 Set-ExplorerOptions -showHidenFilesFoldersDrives -showProtectedOSFiles -showFileExtensions
 Set-TaskbarSmall
 Enable-RemoteDesktop
+Set-StartScreenOptions -EnableBootToDesktop
 
-cinstm VisualStudioExpress2012Web
-cinstm fiddler
-cinstm mssqlserver2012express
-cinstm git-credential-winstore
-cinstm console-devel
-cinstm skydrive
-cinstm poshgit
-cinstm windbg
+# Boxstarter specific
+cinstm boxstarter.common
+cinstm boxstarter.winconfig
 
-cinst Microsoft-Hyper-V-All -source windowsFeatures
-cinst IIS-WebServerRole -source windowsfeatures
-cinst IIS-HttpCompressionDynamic -source windowsfeatures
-cinst IIS-ManagementScriptingTools -source windowsfeatures
-cinst IIS-WindowsAuthentication -source windowsfeatures
-cinst TelnetClient -source windowsFeatures
+refreshenv
 
-Install-ChocolateyPinnedTaskBarItem "$env:windir\system32\mstsc.exe"
-Install-ChocolateyPinnedTaskBarItem "$env:programfiles\console\console.exe"
+# Frameworks, etc.
+cinstm flashplayerplugin -y
+cinstm jre8 -y
+cinstm dotnet4.5 -y
+cinstm vcredist2010 -y
+cinstm adobeshockwaveplayer -y
+cinstm adobeair -y
+cinstm silverlight -y
 
-copy-item (Join-Path (Get-PackageRoot($MyInvocation)) 'console.xml') -Force $env:appdata\console\console.xml
+# Programs
+cinstm firefox -y
+cinstm 7zip -y
+cinstm git -y
+cinstm vlc -y
+cinstm filezilla -y
+cinstm paint.net -y
+cinstm malwarebytes -y
+cinstm steam -y
+cinstm f.lux -y
+cinstm skype -y
+cinstm qbittorrent -y
+cinstm everything -y
 
-Install-ChocolateyVsixPackage xunit http://visualstudiogallery.msdn.microsoft.com/463c5987-f82b-46c8-a97e-b1cde42b9099/file/66837/1/xunit.runner.visualstudio.vsix
-Install-ChocolateyVsixPackage autowrocktestable http://visualstudiogallery.msdn.microsoft.com/ea3a37c9-1c76-4628-803e-b10a109e7943/file/73131/1/AutoWrockTestable.vsix
+Install-ChocolateyPinnedTaskBarItem "$($Boxstarter.programFiles86)\Steam\steam.exe"
+Install-ChocolateyPinnedTaskBarItem "$($Boxstarter.programFiles86)\Mozilla Firefox\firefox.exe"
